@@ -1,0 +1,13 @@
+# 示例配置文件
+# 部署后访问程序的URL类似下面的形式：
+# http://192.168.1.2:8080/app/index.html
+
+
+app_name = "app"  # app名称
+
+# 服务器相关配置
+[server]
+addr = "192.168.1.2:22"  # ssh地址
+username = "username"
+password = "password"
+tomcat_path = "/usr/local/tomcat"  # tomcat的安装路径
