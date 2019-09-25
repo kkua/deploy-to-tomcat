@@ -62,7 +62,7 @@ fn main() {
             let tomcat_app_dir_path = config.server.tomcat_path.to_owned() + "/webapps/";
             let deploy_dir_path = tomcat_app_dir_path + "/" + &config.app_name;
             let record_file_path = RECORD_DIR_PATH.to_owned() + "/" + &config.app_name + ".rec";
-            let tcp = TcpStream::connect(&config.server.addr).unwrap();
+            let tcp = TcpStream::connect(&config.server.addr).expect("Failed establish tcp connection.");
             let sess = connect_ssh(&tcp, &config.server.username, &config.server.password);
             let mut records = parse_record_file(&sess, &record_file_path, &deploy_dir_path);
             upload_dir(
@@ -238,8 +238,8 @@ fn upload_dir(
 
 fn connect_ssh(tcp: &TcpStream, user_name: &str, password: &str) -> Session {
     let mut sess = Session::new().unwrap();
-    sess.handshake(&tcp).unwrap();
-    sess.userauth_password(user_name, password).unwrap();
+    sess.handshake(&tcp).expect("Failed to connect remote server.");
+    sess.userauth_password(user_name, password).expect("Failed to login remote server.");
     return sess;
 }
 
